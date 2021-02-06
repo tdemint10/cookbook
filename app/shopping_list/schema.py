@@ -15,9 +15,5 @@ class ShoppingListSchema(Schema):
     id = fields.String(attribute="id")
     createdAt = fields.String(attribute="created_at")
     items = fields.List(fields.Nested(ShoppingListItemSchema))
-
-
-class RecipeIdsSchema(Schema):
-    """ RecipeIds Schema """
-
-    ids = fields.List(fields.String(), attribute="ids")
+    recipes = fields.List(fields.String(), attribute="recipes")
+    isCurrent = fields.Boolean(attribute="is_current")

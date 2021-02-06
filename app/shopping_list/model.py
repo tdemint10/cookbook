@@ -15,3 +15,5 @@ class ShoppingList(mongoengine.Document):
 
     created_at = mongoengine.DateTimeField(required=True, default=datetime.datetime.utcnow)
     items = mongoengine.ListField(mongoengine.EmbeddedDocumentField(ShoppingListItem))
+    recipes = mongoengine.ListField(mongoengine.StringField())
+    is_current = mongoengine.BooleanField()

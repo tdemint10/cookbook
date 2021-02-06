@@ -3,7 +3,7 @@ import bson
 from typing import List
 
 from .model import ShoppingList
-from .interface import ShoppingListInterface, ShoppingListItemInterface, RecipeIdsInterface
+from .interface import ShoppingListInterface, ShoppingListItemInterface
 
 from app.recipe.model import Recipe
 from app.recipe.service import RecipeService
@@ -47,9 +47,14 @@ class ShoppingListService:
                 unit=items_json[name]["unit"]
             ))
 
+        # append recipe id
+        recipes = shopping_list.recipes
+        recipes.append(str(recipe.id))
+
         # persist
         shopping_list.update(**{
-            "set__items": items
+            "set__items": items,
+            "set__recipes": recipes
         })
 
         return ShoppingListService.get_by_id(shopping_list.id)
@@ -81,9 +86,14 @@ class ShoppingListService:
                 unit=items_json[name]["unit"]
             ))
 
+        # remove recipe id
+        recipe_ids = shopping_list.recipes
+        recipe_ids.remove(str(recipe.id))
+
         # persist
         shopping_list.update(**{
-            "set__items": items
+            "set__items": items,
+            "set__recipes": recipe_ids
         })
 
         return ShoppingListService.get_by_id(shopping_list.id)

@@ -4,7 +4,7 @@ from flask_restx import Namespace, Resource
 from flask.wrappers import Response
 from typing import List
 
-from .schema import ShoppingListSchema, RecipeIdsSchema
+from .schema import ShoppingListSchema
 from .service import ShoppingListService
 from .model import ShoppingList
 from .interface import ShoppingListInterface

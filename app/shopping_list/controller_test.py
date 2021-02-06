@@ -3,9 +3,9 @@ from flask.testing import FlaskClient
 
 from app.test.fixtures import client, app
 from .service import ShoppingListService
-from .schema import ShoppingListSchema, RecipeIdsSchema
+from .schema import ShoppingListSchema
 from .model import ShoppingList
-from .interface import ShoppingListInterface, RecipeIdsInterface
+from .interface import ShoppingListInterface
 from . import BASE_ROUTE
 
 

@@ -11,7 +11,5 @@ class ShoppingListItemInterface(TypedDict, total=False):
 class ShoppingListInterface(TypedDict, total=False):
     created_at: str
     items: List[ShoppingListItemInterface]
-
-
-class RecipeIdsInterface(TypedDict, total=False):
-    ids: List[str]
+    recipes: List[str]
+    is_current: bool

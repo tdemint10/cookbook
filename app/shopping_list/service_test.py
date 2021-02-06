@@ -7,7 +7,7 @@ from app.recipe.model import Recipe, Ingredient
 
 from .model import ShoppingList
 from .service import ShoppingListService
-from .interface import ShoppingListInterface, ShoppingListItemInterface, RecipeIdsInterface
+from .interface import ShoppingListInterface, ShoppingListItemInterface
 
 
 def test_get_all(db: mongoengine):
@@ -50,6 +50,7 @@ def test_add_recipe(db: mongoengine):
     assert len(result_1.items) == 1
     assert result_1.items[0].name == "item_1"
     assert result_1.items[0].amount == 1.0
+    assert len(result_1.recipes) == 1
 
     ingredient_2 = Ingredient(name="item_2", amount=3.0, unit="cup")
     recipe_2: Recipe = Recipe(name="test_recipe_2", ingredients=[ingredient_1, ingredient_2])
@@ -63,6 +64,7 @@ def test_add_recipe(db: mongoengine):
     assert result_2.items[0].amount == 2.0
     assert result_2.items[1].name == "item_2"
     assert result_2.items[1].amount == 3.0
+    assert len(result_2.recipes) == 2
 
 
 def test_remove_recipe(db: mongoengine):
@@ -87,6 +89,8 @@ def test_remove_recipe(db: mongoengine):
     assert len(result_1.items) == 1
     assert result_1.items[0].name == "item_1"
     assert result_1.items[0].amount == 1.0
+    assert len(result_1.recipes) == 1
+    assert result_1.recipes[0] == str(recipe_1.id)
 
 
 def test_delete(db: mongoengine):
