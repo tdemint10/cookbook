@@ -50,6 +50,16 @@ class ShoppingListIdResource(Resource):
         return jsonify(dict(status="Success", id=id))
 
 
+@api.route("/current")
+class ShoppinglistCurrentResource(Resource):
+
+    @responds(schema=ShoppingListSchema)
+    def get(self) -> ShoppingList:
+        """ Get current Shopping List """
+
+        return ShoppingListService.get_current()
+
+
 @api.route("/<string:shoppingListId>/add/<string:recipeId>")
 @api.param("shoppingListId", "Shopping List ID")
 @api.param("recipeId", "Recipe ID")

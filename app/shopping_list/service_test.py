@@ -35,6 +35,20 @@ def test_get_by_id(db: mongoengine):
     assert result == shopping_list_1
 
 
+def test_get_current(db: mongoengine):
+    shopping_list_1: ShoppingList = ShoppingListService.create()
+
+    result_1: ShoppingList = ShoppingListService.get_current()
+
+    assert result_1 == shopping_list_1
+
+    shopping_list_2: ShoppingList = ShoppingListService.create()
+
+    result_2: ShoppingList = ShoppingListService.get_current()
+
+    assert result_2 == shopping_list_2
+
+
 def test_add_recipe(db: mongoengine):
     shopping_list: ShoppingList = ShoppingList(items=[])
 
@@ -107,6 +121,7 @@ def test_create(db: mongoengine):
     create_result: ShoppingList = ShoppingListService.create()
 
     assert create_result
+    assert create_result.is_current
 
     query_result: List[ShoppingList] = ShoppingList.objects
 

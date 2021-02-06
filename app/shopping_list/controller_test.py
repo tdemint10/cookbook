@@ -62,6 +62,16 @@ class TestShoppingListIdResource:
             assert result == expected
 
 
+class TestShoppingListCurrentResource:
+
+    @patch.object(ShoppingListService, "get_current", lambda: make_shopping_list())
+    def test_get(self, client: FlaskClient):
+        with client:
+            result: ShoppingList = client.get(f"/api/{BASE_ROUTE}/current").get_json()
+
+            assert result
+
+
 class TestShoppingListAddResource:
 
     @patch.object(ShoppingListService, "add_recipe", lambda id_1, id_2: make_shopping_list())

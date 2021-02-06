@@ -22,6 +22,11 @@ class ShoppingListService:
 
 
     @staticmethod
+    def get_current() -> ShoppingList:
+        return ShoppingList.objects(is_current=True).first()
+
+
+    @staticmethod
     def add_recipe(shopping_list_id: str, recipe_id: str) -> ShoppingList:
         shopping_list: ShoppingList = ShoppingListService.get_by_id(shopping_list_id)
         recipe: Recipe = RecipeService.get_by_id(recipe_id)
@@ -114,6 +119,14 @@ class ShoppingListService:
 
     @staticmethod
     def create() -> ShoppingList:
-        new_shopping_list = ShoppingList(items=[]).save()
+        old_shopping_list: ShoppingList = ShoppingListService.get_current()
+
+        # only one current list
+        if old_shopping_list:
+            old_shopping_list.update(**{
+                "set__is_current": False
+            })
+
+        new_shopping_list = ShoppingList(items=[], is_current=True).save()
 
         return new_shopping_list
